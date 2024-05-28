@@ -1,8 +1,25 @@
+
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.2.4'
 	id 'io.spring.dependency-management' version '1.1.4'
 }
+
+
+task compile(type: GradleBuild) {
+	tasks = ['clean','build']
+}
+
+task dockerComposeUp(type: Exec) {
+	workingDir '.'
+	commandLine 'docker-compose', 'up', '--build', '-d'
+}
+
+task dockerComposeStop(type: Exec) {
+	workingDir '.'
+	commandLine 'docker-compose', 'stop'
+}
+
 
 group = 'com.tkosmulski'
 version = '0.0.1-SNAPSHOT'
