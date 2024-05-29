@@ -11,7 +11,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh "./gradlew build"
+                sh "./gradlew compile"
             }
         }
 
@@ -23,7 +23,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh "./gradlew deploy"
+                sh "./gradlew dockerComposeUp"
             }
         }
     }
