@@ -9,6 +9,16 @@ pipeline {
             }
         }
 
+        stage('Check Requirements') {
+            steps {
+                sh '''
+                    docker version
+                    docker info
+                    docker-compose version
+                '''
+            }
+        }
+
         stage('Build') {
             steps {
                 sh "./gradlew compile"
