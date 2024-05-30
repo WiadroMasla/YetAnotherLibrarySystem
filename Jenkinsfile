@@ -23,11 +23,12 @@ pipeline {
 
         stage('Deploy') {
             steps {
-            container('general-container-name') {
-                withEnv(['PATH+EXTRA=C:\\Program Files\\Docker\\Docker\\resources\\bin']) {
-                    sh "./gradlew dockerComposeUp"
-                }
+                container('general-container-name') {
+                    withEnv(['PATH+EXTRA=C:\\Program Files\\Docker\\Docker\\resources\\bin']) {
+                         sh "./gradlew dockerComposeUp"
+                    }
 
+                }
             }
         }
     }
