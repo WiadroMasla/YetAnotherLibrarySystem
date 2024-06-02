@@ -1,8 +1,10 @@
 package com.tkosmulski.yetAnotherLibrarySystem.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -23,7 +25,11 @@ public class Book {
     Long total;
 
     @ManyToMany(mappedBy = "books")
-    Set<Author> authors;
+    Set<Author> authors = new HashSet<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "borrowedBook")
+    Set<BookBorrow> borrows = new HashSet<>();
 
     public Book() {
     }
@@ -74,6 +80,14 @@ public class Book {
 
     public void setAuthors(Set<Author> authors) {
         this.authors = authors;
+    }
+
+    public Set<BookBorrow> getBorrows() {
+        return borrows;
+    }
+
+    public void setBorrows(Set<BookBorrow> borrows) {
+        this.borrows = borrows;
     }
 
     @Override

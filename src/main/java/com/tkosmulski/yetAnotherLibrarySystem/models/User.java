@@ -1,13 +1,12 @@
 package com.tkosmulski.yetAnotherLibrarySystem.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -20,6 +19,9 @@ public class User {
 
     @NotNull
     String password;
+
+    @OneToMany(mappedBy = "borrower")
+    Set<BookBorrow> borrowedBooks = new HashSet<>();
 
     public User(){}
 
@@ -47,16 +49,24 @@ public class User {
         this.password = password;
     }
 
+    public Set<BookBorrow> getBorrowedBooks() {
+        return borrowedBooks;
+    }
+
+    public void setBorrowedBooks(Set<BookBorrow> borrowedBooks) {
+        this.borrowedBooks = borrowedBooks;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(email, user.email) && Objects.equals(password, user.password);
+        return Objects.equals(id, user.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, password);
+        return Objects.hash(id);
     }
 }
