@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 public class BookBorrow {
@@ -24,6 +25,9 @@ public class BookBorrow {
     @ManyToOne
     @JoinColumn(name = "book_id")
     Book borrowedBook;
+
+    @OneToOne(mappedBy = "borrow")
+    BookReturn bookReturn;
 
     public BookBorrow() {
     }
@@ -66,5 +70,26 @@ public class BookBorrow {
 
     public void setBorrowedBook(Book borrowedBook) {
         this.borrowedBook = borrowedBook;
+    }
+
+    public BookReturn getBookReturn() {
+        return bookReturn;
+    }
+
+    public void setBookReturn(BookReturn bookReturn) {
+        this.bookReturn = bookReturn;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BookBorrow that = (BookBorrow) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
