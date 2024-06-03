@@ -1,5 +1,6 @@
 package com.tkosmulski.yetAnotherLibrarySystem.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -26,6 +27,7 @@ public class BookBorrow {
     @JoinColumn(name = "book_id")
     Book borrowedBook;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "borrow")
     BookReturn bookReturn;
 
