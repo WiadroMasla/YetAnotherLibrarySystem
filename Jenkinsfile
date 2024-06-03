@@ -11,19 +11,19 @@ pipeline {
 
         stage('Build') {
             steps {
-                powershell "gradle compile"
+                powershell "gradlew compile"
             }
         }
 
         stage('Test') {
             steps {
-                powershell "gradle test"
+                powershell "gradlew test"
             }
         }
 
         stage('Deploy') {
             steps {
-                powershell "gradle dockerComposeUp"
+                powershell "gradlew dockerComposeUp"
             }
         }
     }
