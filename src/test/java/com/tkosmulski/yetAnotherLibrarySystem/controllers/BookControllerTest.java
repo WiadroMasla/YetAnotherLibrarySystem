@@ -24,19 +24,22 @@ public class BookControllerTest {
     BookRepository bookRepository;
 
     public void postDefault() throws Exception {
-        bookRepository.deleteAll();
-        Book book = new Book();
-        book.setId(1l);
-        book.setTitle("Krzyżacy");
-        book.setIsbn("9780331623468");
-        bookRepository.save(book);
+        String payload = """
+                {
+                    \"id\" : 1,
+                    \"title\" : "Krzyzacy",
+                    \"isbn\" : "9780331623468"
+                }
+                """;
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/books")
+                .contentType(MediaType.APPLICATION_JSON).content(payload));
     }
 
     @Test
     public void whenChangingAmount_thenIsOk() throws Exception {
         postDefault();
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/books"));
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/books/id/5/amountChange/1"))
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/books/id/2/amountChange/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
     }
@@ -44,7 +47,7 @@ public class BookControllerTest {
     @Test
     public void whenChangingAmountForNonexistingBook_thenIsNotFound() throws Exception {
         postDefault();
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/books"));
+
         mockMvc.perform(MockMvcRequestBuilders.post("/api/books/id/-1/amountChange/1"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
@@ -54,7 +57,7 @@ public class BookControllerTest {
     public void whenSubstractingAmountTooMuch_thenIsConflict() throws Exception {
         postDefault();
         mockMvc.perform(MockMvcRequestBuilders.get("/api/books"));
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/books/id/2/amountChange/-10000"))
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/books/id/1/amountChange/-10000"))
                 .andExpect(MockMvcResultMatchers.status().isConflict())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
     }
@@ -62,6 +65,7 @@ public class BookControllerTest {
     @Test
     public void whenGettingBooks_thenIsOk() throws Exception {
         postDefault();
+
         mockMvc.perform(MockMvcRequestBuilders.get("/api/books"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
@@ -72,7 +76,7 @@ public class BookControllerTest {
     public void whenGettingBookById_thenIsOk() throws Exception {
         postDefault();
         mockMvc.perform(MockMvcRequestBuilders.get("/api/books"));
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/books/id/9"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/books/id/2"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
 
@@ -116,6 +120,7 @@ public class BookControllerTest {
 
     @Test
     public void whenPostingBook_thenIsCreated() throws Exception {
+        postDefault();
         String payload = """
                 {
                     \"title\" : "Ogniem i Mieczem",
@@ -151,7 +156,7 @@ public class BookControllerTest {
     public void whenDeletingBookById_thenIsOk() throws Exception {
         postDefault();
         mockMvc.perform(MockMvcRequestBuilders.get("/api/books"));
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/books/id/3"))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/books/id/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
 
