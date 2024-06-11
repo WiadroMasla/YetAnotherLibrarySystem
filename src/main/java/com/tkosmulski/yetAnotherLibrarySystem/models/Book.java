@@ -3,6 +3,8 @@ package com.tkosmulski.yetAnotherLibrarySystem.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -20,11 +22,12 @@ public class Book {
     @NotNull
     String title;
 
-    Long available;
+    Long available = 0l;
 
-    Long total;
+    Long total = 0l;
 
     @ManyToMany(mappedBy = "books")
+    @Fetch(FetchMode.JOIN)
     Set<Author> authors = new HashSet<>();
 
     @JsonIgnore
