@@ -34,7 +34,7 @@ public class BookAuthorControllerTest {
     public void postDefault() throws Exception {
         String payload = """
                 {
-                    \"id\" : 1,
+                    \"id\" : 3,
                     \"name\" : "Henryk",
                     \"surname\" : "Sienkiewicz"
                 }
@@ -53,12 +53,13 @@ public class BookAuthorControllerTest {
                 .contentType(MediaType.APPLICATION_JSON).content(payload));
     }
 
+
     @Test
     public void whenPosting_thenIsCreated() throws Exception {
         postDefault();
         mockMvc.perform(MockMvcRequestBuilders.get("/api/books"));
         mockMvc.perform(MockMvcRequestBuilders.get("/api/authors"));
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/booksAuthors/bookId/1/authorId/1"))
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/booksAuthors/bookId/1/authorId/3"))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
 
@@ -67,7 +68,7 @@ public class BookAuthorControllerTest {
     @Test
     public void whenPostingNonexistentBook_thenIsNotFound() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/booksAuthors/bookId/-1/authorId/1"))
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/booksAuthors/bookId/-1/authorId/3"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
 
@@ -82,12 +83,13 @@ public class BookAuthorControllerTest {
 
     }
 
+
     @Test
     public void whenDeleting_thenIsOk() throws Exception {
         postDefault();
         mockMvc.perform(MockMvcRequestBuilders.get("/api/books"));
         mockMvc.perform(MockMvcRequestBuilders.get("/api/authors"));
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/booksAuthors/bookId/1/authorId/1"))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/booksAuthors/bookId/1/authorId/3"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
 
@@ -96,7 +98,7 @@ public class BookAuthorControllerTest {
     @Test
     public void whenDeletingNonexistentBook_thenIsNotFound() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/booksAuthors/bookId/-1/authorId/1"))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/booksAuthors/bookId/-1/authorId/3"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
 
