@@ -33,13 +33,32 @@ public class BookControllerTest {
                 """;
         mockMvc.perform(MockMvcRequestBuilders.post("/api/books")
                 .contentType(MediaType.APPLICATION_JSON).content(payload));
+        payload = """
+                {
+                    \"id\" : 2,
+                    \"title\" : "To be edited",
+                    \"isbn\" : "1231231231231"
+                }
+                """;
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/books")
+                .contentType(MediaType.APPLICATION_JSON).content(payload));
+
+        payload = """
+                {
+                    \"id\" : 3,
+                    \"title\" : "To be deleted",
+                    \"isbn\" : "333333333"
+                }
+                """;
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/books")
+                .contentType(MediaType.APPLICATION_JSON).content(payload));
     }
 
     @Test
     public void whenChangingAmount_thenIsOk() throws Exception {
         postDefault();
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/books/id/2/amountChange/1"))
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/books/id/1/amountChange/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
     }
@@ -76,7 +95,7 @@ public class BookControllerTest {
     public void whenGettingBookById_thenIsOk() throws Exception {
         postDefault();
         mockMvc.perform(MockMvcRequestBuilders.get("/api/books"));
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/books/id/2"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/books/id/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
 
@@ -156,7 +175,7 @@ public class BookControllerTest {
     public void whenDeletingBookById_thenIsOk() throws Exception {
         postDefault();
         mockMvc.perform(MockMvcRequestBuilders.get("/api/books"));
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/books/id/1"))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/books/id/3"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
 
@@ -180,7 +199,7 @@ public class BookControllerTest {
                     \"isbn\" : "9781911414001"
                 }
                 """;
-        mockMvc.perform(MockMvcRequestBuilders.patch("/api/books/id/1")
+        mockMvc.perform(MockMvcRequestBuilders.patch("/api/books/id/2")
                         .contentType(MediaType.APPLICATION_JSON).content(payload))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));

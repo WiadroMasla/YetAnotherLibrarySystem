@@ -36,6 +36,26 @@ public class AuthorControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/authors")
                 .contentType(MediaType.APPLICATION_JSON).content(payload));
 
+        payload = """
+                {
+                    \"id\" : 2,
+                    \"name\" : "Edited",
+                    \"surname\" : "Sienkiewicz"
+                }
+                """;
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/authors")
+                .contentType(MediaType.APPLICATION_JSON).content(payload));
+
+        payload = """
+                {
+                    \"id\" : 3,
+                    \"name\" : "Deleted",
+                    \"surname\" : "Sienkiewicz"
+                }
+                """;
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/authors")
+                .contentType(MediaType.APPLICATION_JSON).content(payload));
+
     }
 
     @Test
@@ -70,7 +90,7 @@ public class AuthorControllerTest {
         String payload = """
                 {
                     \"name\" : "Adam",
-                    \"surname\" : "Mickiewicz"
+                    \"surname\" : "Roman"
                 }
                 """;
 
@@ -101,7 +121,7 @@ public class AuthorControllerTest {
     @Test
     public void whenDeletingAuthorById_thenIsOk() throws Exception {
         postDefault();
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/authors/id/1"))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/authors/id/3"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
 
@@ -125,7 +145,7 @@ public class AuthorControllerTest {
                     \"surname\" : "Mickiewicz"
                 }
                 """;
-        mockMvc.perform(MockMvcRequestBuilders.patch("/api/authors/id/1")
+        mockMvc.perform(MockMvcRequestBuilders.patch("/api/authors/id/2")
                         .contentType(MediaType.APPLICATION_JSON).content(payload))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
