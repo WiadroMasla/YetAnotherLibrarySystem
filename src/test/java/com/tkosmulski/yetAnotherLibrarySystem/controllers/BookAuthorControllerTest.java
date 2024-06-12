@@ -46,11 +46,14 @@ public class BookAuthorControllerTest {
                 {
                     \"id\" : 1,
                     \"title\" : "Krzyzacy",
-                    \"isbn\" : "9780331623468"
+                    \"isbn\" : "9780331623468",
+                    \"available\" : 10,
+                    \"total\" : 10
                 }
                 """;
         mockMvc.perform(MockMvcRequestBuilders.post("/api/books")
                 .contentType(MediaType.APPLICATION_JSON).content(payload));
+
     }
 
 

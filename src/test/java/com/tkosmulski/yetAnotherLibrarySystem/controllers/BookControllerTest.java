@@ -28,7 +28,9 @@ public class BookControllerTest {
                 {
                     \"id\" : 1,
                     \"title\" : "Krzyzacy",
-                    \"isbn\" : "9780331623468"
+                    \"isbn\" : "9780331623468",
+                    \"available\" : 10,
+                    \"total\" : 10
                 }
                 """;
         mockMvc.perform(MockMvcRequestBuilders.post("/api/books")
@@ -36,6 +38,15 @@ public class BookControllerTest {
         payload = """
                 {
                     \"id\" : 2,
+                    \"title\" : "Księga Dżungli",
+                    \"isbn\" : "000000000000"
+                }
+                """;
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/books")
+                .contentType(MediaType.APPLICATION_JSON).content(payload));
+        payload = """
+                {
+                    \"id\" : 3,
                     \"title\" : "To be edited",
                     \"isbn\" : "1231231231231"
                 }
@@ -45,7 +56,7 @@ public class BookControllerTest {
 
         payload = """
                 {
-                    \"id\" : 3,
+                    \"id\" : 4,
                     \"title\" : "To be deleted",
                     \"isbn\" : "333333333"
                 }
@@ -175,7 +186,7 @@ public class BookControllerTest {
     public void whenDeletingBookById_thenIsOk() throws Exception {
         postDefault();
         mockMvc.perform(MockMvcRequestBuilders.get("/api/books"));
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/books/id/3"))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/books/id/4"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
 
@@ -199,7 +210,7 @@ public class BookControllerTest {
                     \"isbn\" : "9781911414001"
                 }
                 """;
-        mockMvc.perform(MockMvcRequestBuilders.patch("/api/books/id/2")
+        mockMvc.perform(MockMvcRequestBuilders.patch("/api/books/id/3")
                         .contentType(MediaType.APPLICATION_JSON).content(payload))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
