@@ -21,7 +21,7 @@ public class BookBorrow {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    User borrower;
+    BaseUser borrower;
 
     @ManyToOne
     @JoinColumn(name = "book_id")
@@ -58,11 +58,11 @@ public class BookBorrow {
         this.dueDate = dueDate;
     }
 
-    public User getBorrower() {
+    public BaseUser getBorrower() {
         return borrower;
     }
 
-    public void setBorrower(User borrower) {
+    public void setBorrower(BaseUser borrower) {
         this.borrower = borrower;
     }
 

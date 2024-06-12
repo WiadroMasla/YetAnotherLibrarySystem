@@ -1,7 +1,7 @@
 package com.tkosmulski.yetAnotherLibrarySystem.dtos;
 
 import com.tkosmulski.yetAnotherLibrarySystem.enums.AccessLevel;
-import com.tkosmulski.yetAnotherLibrarySystem.models.User;
+import com.tkosmulski.yetAnotherLibrarySystem.models.BaseUser;
 
 import java.util.Collection;
 import java.util.List;
@@ -12,13 +12,13 @@ public class SafeUserDTO {
     AccessLevel accessLevel;
 
 
-    public SafeUserDTO(User user) {
+    public SafeUserDTO(BaseUser user) {
         id = user.getId();
         email = user.getEmail();
         accessLevel = user.getAccess();
     }
 
-    public static List<SafeUserDTO> from(Collection<User> users) {
+    public static List<SafeUserDTO> from(Collection<BaseUser> users) {
         return users.stream().map(SafeUserDTO::new).toList();
     }
 

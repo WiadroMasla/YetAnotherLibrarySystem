@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-public class User {
+public class BaseUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -30,7 +30,7 @@ public class User {
     @OneToMany(mappedBy = "borrower")
     Set<BookBorrow> borrowedBooks = new HashSet<>();
 
-    public User(){}
+    public BaseUser(){}
 
     public Long getId() {
         return id;
@@ -76,7 +76,7 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
+        BaseUser user = (BaseUser) o;
         return Objects.equals(id, user.id);
     }
 

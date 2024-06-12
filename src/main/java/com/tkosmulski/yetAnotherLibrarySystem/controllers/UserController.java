@@ -1,7 +1,7 @@
 package com.tkosmulski.yetAnotherLibrarySystem.controllers;
 
 import com.tkosmulski.yetAnotherLibrarySystem.dtos.SafeUserDTO;
-import com.tkosmulski.yetAnotherLibrarySystem.models.User;
+import com.tkosmulski.yetAnotherLibrarySystem.models.BaseUser;
 import com.tkosmulski.yetAnotherLibrarySystem.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,12 +31,12 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<SafeUserDTO> registerUser(@RequestBody User user) {
+    public ResponseEntity<SafeUserDTO> registerUser(@RequestBody BaseUser user) {
         return new ResponseEntity<>(new SafeUserDTO(userService.add(user)), HttpStatus.CREATED);
     }
 
     @PatchMapping
-    public ResponseEntity<SafeUserDTO> edit(@RequestBody User user) {
+    public ResponseEntity<SafeUserDTO> edit(@RequestBody BaseUser user) {
         return new ResponseEntity<>(new SafeUserDTO(userService.edit(user)),HttpStatus.OK);
     }
 }
