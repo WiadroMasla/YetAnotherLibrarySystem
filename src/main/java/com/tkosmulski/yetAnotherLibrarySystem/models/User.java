@@ -1,6 +1,7 @@
 package com.tkosmulski.yetAnotherLibrarySystem.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tkosmulski.yetAnotherLibrarySystem.enums.AccessLevel;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -20,6 +21,10 @@ public class User {
 
     @NotNull
     String password;
+
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    AccessLevel access = AccessLevel.BASIC;
 
     @JsonIgnore
     @OneToMany(mappedBy = "borrower")
@@ -57,6 +62,14 @@ public class User {
 
     public void setBorrowedBooks(Set<BookBorrow> borrowedBooks) {
         this.borrowedBooks = borrowedBooks;
+    }
+
+    public AccessLevel getAccess() {
+        return access;
+    }
+
+    public void setAccess(AccessLevel access) {
+        this.access = access;
     }
 
     @Override
