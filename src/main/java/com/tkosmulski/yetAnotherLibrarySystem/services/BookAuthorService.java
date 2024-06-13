@@ -2,11 +2,14 @@ package com.tkosmulski.yetAnotherLibrarySystem.services;
 
 import com.tkosmulski.yetAnotherLibrarySystem.models.Author;
 import com.tkosmulski.yetAnotherLibrarySystem.models.Book;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BookAuthorService {
+    Logger logger = LoggerFactory.getLogger(BookAuthorService.class);
     BookService bookService;
     AuthorService authorService;
 
